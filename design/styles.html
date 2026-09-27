@@ -1,0 +1,139 @@
+<title>סגנונות לשיר של היום</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alef:wght@400;700&family=Assistant:wght@300;400;700;800&family=Bellefair&family=David+Libre:wght@400;700&family=Frank+Ruhl+Libre:wght@400;700&family=IBM+Plex+Sans+Hebrew:wght@400;600&family=Karantina:wght@700&family=Miriam+Libre:wght@400;700&family=Playpen+Sans+Hebrew:wght@400;600&family=Suez+One&display=swap">
+<style>
+  :root { --bg: #EEF0F2; --ink: #1C232B; --muted: #5E6873; --line: #D3D8DE; color-scheme: light; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #15191E; --ink: #E7EAEE; --muted: #9AA4AF; --line: #2B323A; color-scheme: dark; } }
+  :root[data-theme="dark"] { --bg: #15191E; --ink: #E7EAEE; --muted: #9AA4AF; --line: #2B323A; color-scheme: dark; }
+  body { background: var(--bg); color: var(--ink); font: 16px/1.6 "Assistant", Arial, sans-serif; direction: rtl; padding-inline: 16px; padding-block: 28px 48px; }
+  .wrap { max-width: 1120px; margin: 0 auto; display: grid; gap: 28px; }
+  h1 { font: 800 30px/1.2 "Assistant", Arial, sans-serif; text-wrap: balance; }
+  .intro { color: var(--muted); max-width: 62ch; margin-top: 6px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 28px 20px; }
+  figure { margin: 0; display: grid; gap: 10px; align-content: start; }
+  figcaption b { display: block; font-size: 17px; }
+  figcaption { color: var(--muted); font-size: 14px; }
+  figcaption b { color: var(--ink); }
+  .tried { font-size: 12px; border: 1px solid var(--line); border-radius: 4px; padding: 0 6px; margin-inline-start: 6px; font-weight: 400; color: var(--muted); }
+
+  /* מבנה משותף לכל דוגמה */
+  .screen { padding: 18px; min-height: 360px; display: grid; gap: 14px; align-content: start; overflow: hidden; }
+  .wk { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; }
+  .wk b { display: block; } .wk small { font-size: 11px; }
+  .ld { font-size: 13px; margin: 0; }
+  .sg small { font-size: 12px; display: block; }
+  .t { font-size: 30px; line-height: 1.1; }
+  .a { font-size: 15px; }
+  .w { font-size: 14px; margin: 8px 0 0; max-width: 32ch; }
+  .lk { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+  .lk span { font-size: 13px; padding: 6px 10px; }
+  .today { font-weight: 700; }
+
+  /* 1 תכלת וטלית */
+  .s1 .screen { background: #F5F6F3; color: #16213A; font-family: "IBM Plex Sans Hebrew", Arial, sans-serif; }
+  .s1 .wk { background: #DCE3EF; } .s1 .wk > div { padding: 6px 0; }
+  .s1 .wk .today { background: #2F4E8C; color: #F5F6F3; } .s1 .wk .sh { background: #120A04; color: #FBE8C7; }
+  .s1 .t, .s1 .wk b { font-family: "Frank Ruhl Libre", serif; font-weight: 700; }
+  .s1 .lk span { color: #2F4E8C; text-decoration: underline; padding: 0 0 0 10px; }
+
+  /* 2 עטיפת קסטה */
+  .s2 .screen { background: #0E3B2E; color: #F7F7F2; font-family: "Miriam Libre", Arial, sans-serif; }
+  .s2 .wk { background: #F7F7F2; color: #0E3B2E; border-top: 4px solid #C9A227; } .s2 .wk > div { padding: 6px 0; }
+  .s2 .wk .sh { background: #7A1F2B; color: #C9A227; } .s2 .wk .today b { color: #7A1F2B; }
+  .s2 .wk b, .s2 .t { font-family: "Suez One", serif; font-weight: 400; }
+  .s2 .ld { color: #C9A227; }
+  .s2 .sg { background: #F7F7F2; color: #0E3B2E; border-radius: 8px; padding: 12px; border-top: 6px solid #C9A227; box-shadow: inset 0 3px 0 #7A1F2B; }
+  .s2 .lk span { background: #0E3B2E; color: #F7F7F2; box-shadow: inset 0 -3px 0 #07251C; }
+
+  /* 3 Corporate Trust */
+  .s3 .screen { background: #F5F7FA; color: #1B2433; font-family: "Assistant", Arial, sans-serif; padding: 0; gap: 0; }
+  .s3 .top { background: #0F2A4A; color: #fff; padding: 14px 16px; display: grid; gap: 10px; }
+  .s3 .wk > div { padding: 4px 0; border-radius: 6px; } .s3 .wk .today { background: #fff; color: #0F2A4A; }
+  .s3 .sg { background: #fff; border: 1px solid #DCE3EC; border-radius: 10px; margin: 14px; padding: 14px; }
+  .s3 .t { font-weight: 800; color: #0F2A4A; font-size: 26px; }
+  .s3 .sg::after { content: "✓ מהרשימה המאושרת"; display: inline-block; margin-top: 10px; font-size: 12px; font-weight: 700; color: #1E7F5C; background: #E6F4EE; border-radius: 99px; padding: 2px 10px; }
+  .s3 .lk span { border: 1px solid #DCE3EC; border-radius: 6px; font-weight: 700; color: #0F2A4A; } .s3 .lk span:first-child { background: #1F5AA6; color: #fff; border-color: #1F5AA6; }
+
+  /* 4 Quiet Luxury */
+  .s4 .screen { background: #F2F1EE; color: #23211E; font-family: "Assistant", Arial, sans-serif; font-weight: 300; padding: 24px; gap: 22px; }
+  .s4 .wk b { font: 18px "Bellefair", serif; } .s4 .wk small, .s4 .ld, .s4 .a, .s4 .sg small { color: #7C766D; }
+  .s4 .wk .today { border-bottom: 2px solid #9C8A5E; } .s4 .wk .sh b { color: #9C8A5E; }
+  .s4 .t { font: 38px/1.1 "Bellefair", serif; }
+  .s4 .lk { gap: 18px; } .s4 .lk span { padding: 0 0 2px; border-bottom: 1px solid #9C8A5E; }
+
+  /* 5 דף סידור */
+  .s5 .screen { background: #FCFBF7; color: #000; font-family: "David Libre", serif; text-align: center; }
+  .s5 .wk b { font-family: "Frank Ruhl Libre", serif; } .s5 .wk .today b { color: #A3201B; } .s5 .wk .sh { color: #A3201B; }
+  .s5 .ld, .s5 .sg small { color: #A3201B; font-size: 13px; }
+  .s5 .t { font: 700 34px/1.15 "Frank Ruhl Libre", serif; }
+  .s5 .w { margin-inline: auto; }
+  .s5 .lk { justify-content: center; } .s5 .lk span { color: #A3201B; padding: 0 6px; }
+  .s5 .sg { border-top: 1px solid #000; border-bottom: 1px solid #000; padding: 14px 0; }
+
+  /* 6 לוח מודעות בשכונה */
+  .s6 .screen { background: #D9D4C8; color: #111; font-family: "Alef", Arial, sans-serif; }
+  .s6 .wk { background: #9EC9E8; padding: 6px 0; transform: rotate(-1deg); }
+  .s6 .wk b { font: 700 22px "Karantina", sans-serif; } .s6 .wk .today { background: #111; color: #9EC9E8; }
+  .s6 .sg { background: #F4E04D; padding: 14px; transform: rotate(1.2deg); box-shadow: 2px 3px 0 rgba(0,0,0,.18); }
+  .s6 .t { font: 700 46px/.95 "Karantina", sans-serif; }
+  .s6 .lk span { background: #F2A6C2; font-weight: 700; } .s6 .lk span:nth-child(2) { background: #A8D8B9; } .s6 .lk span:nth-child(3) { background: #fff; }
+
+  /* 7 אולפן הקלטות */
+  .s7 .screen { background: #2B2D2F; color: #EDEDE8; font-family: "Assistant", Arial, sans-serif; }
+  .s7 .wk > div { background: #E6D9A8; color: #2B2D2F; margin: 0 2px; padding: 4px 0; font-family: "Playpen Sans Hebrew", sans-serif; transform: rotate(var(--r, 0deg)); }
+  .s7 .wk .today { background: #F2A900; } .s7 .wk .sh { background: #D7263D; color: #fff; }
+  .s7 .ld { color: #F2A900; }
+  .s7 .t { font: 600 28px/1.15 "Playpen Sans Hebrew", sans-serif; background: #E6D9A8; color: #2B2D2F; display: inline-block; padding: 2px 12px; transform: rotate(-1.5deg); }
+  .s7 .lk span { background: #3A3D40; border: 1px solid #4A4E52; border-radius: 3px; font-weight: 700; }
+  .s7 .lk span:first-child::before { content: "● "; color: #D7263D; }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>סגנונות לשיר של היום</h1>
+    <p class="intro">אותו מסך בשבעה כיוונים: רצועת השבוע העברית, המלצת השיר היומית וקישורי ההאזנה. התאריכים אמיתיים. שם השיר והאמן נשארים ריקים עד שתאושר רשימת השירים.</p>
+  </header>
+  <div class="grid" id="grid"></div>
+</div>
+
+<script>
+  const styles = [
+    ['s1', 'תכלת וטלית', 'צבע חוט התכלת, דיו הסת״ם ולבן הטלית. השבת כחלון כהה של אור נרות.', true],
+    ['s2', 'עטיפת קסטה', 'קלטות המוזיקה היהודית של שנות ה-80 וה-90: ירוק בקבוק, הטבעת זהב ובורדו.', true],
+    ['s3', 'Corporate Trust', 'כחול כהה ולבן, וסימני אמינות שמבוססים על מה שהאתר באמת עושה.', true],
+    ['s4', 'Quiet Luxury', 'השקט של שולחן ערוך: אבן, אספרסו ונגיעה אחת של פליז.', true],
+    ['s5', 'דף סידור', 'שחור של טקסט ואדום של הוראות, כמו בסידור מודפס. הכול ממורכז.', false],
+    ['s6', 'לוח מודעות בשכונה', 'דפים צבעוניים תלויים קצת עקום, עם כותרות דחוסות ועבות.', false],
+    ['s7', 'אולפן הקלטות', 'שולחן מיקס אפור, מדבקות נייר דבק בכתב יד ונורית הקלטה אדומה.', false],
+  ];
+
+  const num = new Intl.DateTimeFormat('en-u-ca-hebrew', { day: 'numeric' });
+  const hDay = d => +num.format(d);
+  const gem = n => {
+    let t = n === 15 ? 'טו' : n === 16 ? 'טז' : ' יכל'[Math.floor(n / 10)].trim() + ' אבגדהוזחט'[n % 10].trim();
+    return t.length === 1 ? t + '׳' : t.slice(0, -1) + '״' + t.slice(-1);
+  };
+  const isRC = d => hDay(d) === 1 || hDay(d) === 30;
+  const addDays = (d, n) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+  const names = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'];
+  const today = new Date(), sunday = addDays(today, -today.getDay());
+  const tilt = ['1deg', '-2deg', '0deg', '1.5deg', '-1deg', '2deg', '-1.5deg'];
+
+  const week = names.map((n, i) => {
+    const d = addDays(sunday, i);
+    const cls = [i === 6 && 'sh', i === today.getDay() && 'today'].filter(Boolean).join(' ');
+    return `<div class="${cls}" style="--r:${tilt[i]}"><b>${i === 6 ? 'שבת' : 'אבגדהו'[i]}</b><small>${gem(hDay(d))}${isRC(d) ? ' ☾' : ''}</small></div>`;
+  }).join('');
+  let k = 0; while (k < 31 && !isRC(addDays(today, k))) k++;
+  const when = k === 0 ? 'היום ראש חודש' : k === 1 ? 'מחר ראש חודש' : k === 2 ? 'עוד יומיים ראש חודש' : `עוד ${k} ימים ראש חודש`;
+  const lead = `יום ${names[today.getDay()]}. ${when}.`;
+
+  const song = `<div class="sg"><small>השיר של היום</small><div class="t">שם השיר</div><div class="a">שם האמן</div>
+    <p class="w">כאן יופיע הסבר קצר מה-AI: למה השיר מתאים לסרטון של השבוע.</p>
+    <div class="lk"><span>Spotify</span><span>YouTube</span><span>Apple Music</span></div></div>`;
+
+  document.getElementById('grid').innerHTML = styles.map(([c, name, line, tried]) => {
+    const top = c === 's3' ? `<div class="top"><div class="wk">${week}</div><p class="ld">${lead}</p></div>` : `<div class="wk">${week}</div><p class="ld">${lead}</p>`;
+    return `<figure class="${c}"><div class="screen">${top}${song}</div>
+      <figcaption><b>${name}${tried ? '<span class="tried">נוסה</span>' : ''}</b>${line}</figcaption></figure>`;
+  }).join('');
+</script>
