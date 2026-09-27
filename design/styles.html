@@ -85,12 +85,51 @@
   .s7 .t { font: 600 28px/1.15 "Playpen Sans Hebrew", sans-serif; background: #E6D9A8; color: #2B2D2F; display: inline-block; padding: 2px 12px; transform: rotate(-1.5deg); }
   .s7 .lk span { background: #3A3D40; border: 1px solid #4A4E52; border-radius: 3px; font-weight: 700; }
   .s7 .lk span:first-child::before { content: "● "; color: #D7263D; }
+
+  /* 8 כתובה בחיתוך נייר */
+  .s8 .screen { background: #0F4C5C; color: #F3F6F4; font-family: "Alef", Arial, sans-serif; border: 10px solid #0F4C5C; outline: 2px dashed #F3F6F4; outline-offset: -18px; padding: 26px; }
+  .s8 .wk b, .s8 .t { font-family: "Frank Ruhl Libre", serif; font-weight: 700; }
+  .s8 .wk .today { background: #F3F6F4; color: #0F4C5C; border-radius: 50% 50% 0 0; } .s8 .wk .sh { color: #D8B45A; }
+  .s8 .sg { text-align: center; border-top: 2px solid #D8B45A; padding-top: 12px; } .s8 .w { margin-inline: auto; }
+  .s8 .sg small, .s8 .ld { color: #D8B45A; } .s8 .lk { justify-content: center; }
+  .s8 .lk span { border: 1px solid #F3F6F4; border-radius: 16px 16px 2px 2px; }
+
+  /* 9 תקליט ויניל */
+  .s9 .screen { background: radial-gradient(circle at 108% 110%, #E0A526 0 6%, #000 6.5% 7%, #1A1A1A 7.5% 8.5%, #000 9% 10.5%, #1A1A1A 11% 12.5%, #000 13% 26%, transparent 26.5%), #F0ECE3; color: #000; font-family: "Assistant", Arial, sans-serif; }
+  .s9 .wk b { font-weight: 800; } .s9 .wk .today { background: #000; color: #E0A526; border-radius: 50%; } .s9 .wk .sh { color: #B3261E; }
+  .s9 .t { font-weight: 800; font-size: 34px; letter-spacing: -.01em; }
+  .s9 .sg small { color: #B3261E; font-weight: 700; }
+  .s9 .lk span { background: #000; color: #F0ECE3; border-radius: 99px; font-weight: 700; }
+
+  /* 10 ויטראז' בבית כנסת */
+  .s10 .screen { background: #1E1E1E; color: #fff; font-family: "David Libre", serif; gap: 4px; padding: 4px; }
+  .s10 .wk { gap: 4px; } .s10 .wk > div { background: #1B3F8B; padding: 6px 0; } .s10 .wk .today { background: #E0A526; color: #1E1E1E; } .s10 .wk .sh { background: #9B1B30; }
+  .s10 .ld { background: #2F6B4F; padding: 8px 12px; }
+  .s10 .sg { background: #F4EBD0; color: #1E1E1E; padding: 14px; }
+  .s10 .t { font-weight: 700; font-size: 32px; color: #9B1B30; }
+  .s10 .lk { gap: 4px; } .s10 .lk span { background: #1B3F8B; color: #fff; } .s10 .lk span:nth-child(2) { background: #9B1B30; } .s10 .lk span:nth-child(3) { background: #2F6B4F; }
+
+  /* 11 מחברת ישיבה */
+  .s11 .screen { background: repeating-linear-gradient(#FDFDFB 0 27px, #B9CBE8 27px 28px), #FDFDFB; color: #1C3FAA; font-family: "Playpen Sans Hebrew", sans-serif; border-right: 2px solid #D9534F; padding-right: 26px; line-height: 28px; }
+  .s11 .wk b { font-weight: 600; } .s11 .wk .today b { border: 2px solid #1C3FAA; border-radius: 50%; } .s11 .wk .sh { color: #D9534F; }
+  .s11 .t { font-size: 30px; font-weight: 600; line-height: 1.2; }
+  .s11 .ld, .s11 .w { color: #2B2B2B; }
+  .s11 .lk span { padding: 0 4px; text-decoration: underline wavy #D9534F; }
+
+  /* 12 כרזת הופעה משנות ה-70 */
+  .s12 .screen { background: #3B1F5C; color: #F2B705; font-family: "Alef", Arial, sans-serif; }
+  .s12 .wk b { font: 700 24px "Karantina", sans-serif; } .s12 .wk .today { background: #F2B705; color: #3B1F5C; } .s12 .wk .sh { background: #C2185B; color: #F2B705; }
+  .s12 .ld { color: #F5D0E0; }
+  .s12 .t { font: 700 64px/.85 "Karantina", sans-serif; color: #F5D0E0; text-shadow: 3px 3px 0 #C2185B; }
+  .s12 .a { font-weight: 700; font-size: 18px; }
+  .s12 .w { color: #F5D0E0; }
+  .s12 .lk span { background: #C2185B; color: #F2B705; font-weight: 700; }
 </style>
 
 <div class="wrap">
   <header>
     <h1>סגנונות לשיר של היום</h1>
-    <p class="intro">אותו מסך בשבעה כיוונים: רצועת השבוע העברית, המלצת השיר היומית וקישורי ההאזנה. התאריכים אמיתיים. שם השיר והאמן נשארים ריקים עד שתאושר רשימת השירים.</p>
+    <p class="intro">אותו מסך ב-12 כיוונים: רצועת השבוע העברית, המלצת השיר היומית וקישורי ההאזנה. התאריכים אמיתיים. שם השיר והאמן נשארים ריקים עד שתאושר רשימת השירים.</p>
   </header>
   <div class="grid" id="grid"></div>
 </div>
@@ -104,6 +143,11 @@
     ['s5', 'דף סידור', 'שחור של טקסט ואדום של הוראות, כמו בסידור מודפס. הכול ממורכז.', false],
     ['s6', 'לוח מודעות בשכונה', 'דפים צבעוניים תלויים קצת עקום, עם כותרות דחוסות ועבות.', false],
     ['s7', 'אולפן הקלטות', 'שולחן מיקס אפור, מדבקות נייר דבק בכתב יד ונורית הקלטה אדומה.', false],
+    ['s8', 'כתובה בחיתוך נייר', 'צבע טורקיז עמוק עם קשתות ושוליים של חיתוך נייר, כמו בכתובה מאוירת.', false],
+    ['s9', 'תקליט ויניל', 'חנות תקליטים ישנה: תקליט שחור בפינה, מדבקה בחרדל ואדום.', false],
+    ['s10', 'ויטראז׳ בבית כנסת', 'חלונות זכוכית צבעונית: כחול, אדום, ענבר וירוק, מופרדים בקווי עופרת שחורים.', false],
+    ['s11', 'מחברת ישיבה', 'דף שורות עם שוליים אדומים ועט כחול, כמו רשימות משיעור.', false],
+    ['s12', 'כרזת הופעה משנות ה-70', 'סגול, צהוב ומג׳נטה, עם שם השיר ענק ודחוס כמו בכרזה על קיר.', false],
   ];
 
   const num = new Intl.DateTimeFormat('en-u-ca-hebrew', { day: 'numeric' });
