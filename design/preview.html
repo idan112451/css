@@ -5,144 +5,144 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>תצוגת עיצוב</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Suez+One&family=Miriam+Libre:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-  /* עטיפת קסטה משנות ה-80 וה-90 */
+  /* Corporate Trust: כחול כהה, לבן, מבנה ברור, סימני אמינות */
   :root {
-    --green: #0E3B2E; --gold: #C9A227; --wine: #7A1F2B; --paper: #F7F7F2;
-    --display: "Suez One", "David", serif;
-    --text: "Miriam Libre", "Arial Hebrew", Arial, sans-serif;
+    --navy: #0F2A4A; --blue: #1F5AA6; --blue-soft: #E8F0FB; --bg: #F5F7FA; --card: #FFFFFF;
+    --line: #DCE3EC; --text: #1B2433; --muted: #5B6778; --ok: #1E7F5C; --ok-soft: #E6F4EE;
+    --font: "Assistant", "Arial Hebrew", Arial, sans-serif;
   }
   * { box-sizing: border-box; margin: 0; }
-  body { background: var(--green); color: var(--paper); font: 16px/1.55 var(--text); }
-  .app { max-width: 430px; margin: 0 auto; min-height: 100vh; padding-bottom: 100px; }
+  body { background: var(--bg); color: var(--text); font: 16px/1.55 var(--font); }
+  .app { max-width: 430px; margin: 0 auto; min-height: 100vh; padding-bottom: 110px; }
   .view { display: none; }
   .view.on { display: block; }
-  h1, h2, b { font-family: var(--display); font-weight: 400; }
 
-  /* רצועת השבוע: פס נייר כמו גב של עטיפה */
-  .week { display: grid; grid-template-columns: repeat(6, 1fr) 1.6fr; margin: 16px; background: var(--paper); color: var(--green); border-top: 4px solid var(--gold); }
-  .day { text-align: center; padding: 8px 0 10px; }
-  .day b { display: block; font-size: 20px; line-height: 1.2; }
-  .day small { font-size: 12px; }
-  .day.today b { display: inline-block; width: 30px; height: 30px; line-height: 30px; border-radius: 50%; background: var(--wine); color: var(--paper); }
-  .day.past { opacity: .45; }
-  .day.shabbat { background: var(--wine); color: var(--gold); }
-  .day.rc small::after { content: " ☾"; }
+  /* כותרת עליונה ורצועת השבוע */
+  .top { background: var(--navy); color: #fff; padding: 14px 16px 18px; }
+  .brand { display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 18px; }
+  .brand small { font-weight: 400; font-size: 13px; opacity: .75; }
+  .week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-top: 14px; }
+  .day { text-align: center; padding: 6px 0; border-radius: 8px; font-size: 13px; }
+  .day b { display: block; font-size: 16px; }
+  .day.past { opacity: .5; }
+  .day.today { background: #fff; color: var(--navy); }
+  .day.shabbat { background: rgba(255,255,255,.12); }
+  .day.rc small::after { content: " ●"; color: #8FB6EA; }
+  .lead { margin-top: 12px; font-size: 15px; opacity: .9; }
 
-  .lead { margin: 18px 16px 0; color: var(--gold); }
+  /* כרטיסים */
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 1px 2px rgba(15,42,74,.06); margin: 16px; padding: 18px; }
+  .card h2 { font-size: 14px; font-weight: 600; color: var(--muted); }
+  .song-title { font-size: 26px; font-weight: 800; color: var(--navy); margin-top: 6px; line-height: 1.2; }
+  .artist { color: var(--muted); }
+  .badge { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; padding: 3px 10px; border-radius: 999px; background: var(--ok-soft); color: var(--ok); font-size: 13px; font-weight: 600; }
+  .badge svg { width: 14px; height: 14px; }
+  .why { margin-top: 12px; color: var(--text); }
+  .links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 16px; }
+  .btn { display: block; text-align: center; padding: 10px 0; border-radius: 8px; font: 600 14px var(--font); text-decoration: none; border: 1px solid var(--line); color: var(--navy); background: #fff; }
+  .btn.primary { background: var(--blue); border-color: var(--blue); color: #fff; }
 
-  /* הקלטת */
-  .cassette { margin: 18px 16px 0; background: var(--paper); border-radius: 10px; padding: 12px 12px 0; color: var(--green); position: relative; aspect-ratio: 1.59; display: flex; flex-direction: column; }
-  .cassette::before, .cassette::after { content: ""; position: absolute; top: 6px; width: 7px; height: 7px; border-radius: 50%; background: #CFCFC4; }
-  .cassette::before { right: 6px; } .cassette::after { left: 6px; }
-  .label { border-top: 6px solid var(--gold); box-shadow: inset 0 3px 0 var(--wine); padding: 10px 10px 0; flex: 1; display: flex; flex-direction: column; }
-  .label .side { font-size: 12px; float: left; }
-  .label b { font-size: 26px; line-height: 1.1; }
-  .label span { font-size: 15px; }
-  .window { margin: auto auto 0; width: 64%; height: 30%; background: var(--green); border-radius: 18px; display: flex; justify-content: space-around; align-items: center; }
-  .reel { width: 32px; height: 32px; border-radius: 50%; border: 5px solid var(--paper); background: conic-gradient(var(--paper) 0 10%, transparent 0 33%, var(--paper) 0 43%, transparent 0 66%, var(--paper) 0 76%, transparent 0); animation: spin 2.4s cubic-bezier(.2,.6,.3,1) 1; }
-  .head { width: 72%; height: 12%; margin: 6px auto 0; background: #E4E4DA; clip-path: polygon(8% 0, 92% 0, 100% 100%, 0 100%); }
-  @keyframes spin { to { transform: rotate(-720deg); } }
+  /* קטגוריות */
+  .section-title { margin: 24px 16px 0; font-size: 18px; font-weight: 700; color: var(--navy); }
+  .cats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 16px 0; }
+  .cat { text-align: right; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px; cursor: pointer; font: 700 17px var(--font); color: var(--navy); }
+  .cat small { display: block; font-weight: 400; font-size: 13px; color: var(--muted); }
+  .cat:first-child { grid-column: 1 / -1; background: var(--navy); color: #fff; border-color: var(--navy); }
+  .cat:first-child small { color: #C9D6E8; }
 
-  .why { margin: 14px 16px 0; max-width: 36ch; }
-  /* מקשים של טייפ, לקישורים חיצוניים בלבד */
-  .keys { display: flex; margin: 16px; }
-  .keys a { flex: 1; text-align: center; padding: 12px 0 10px; background: var(--paper); color: var(--green); font: 700 14px var(--text); text-decoration: none; border-left: 1px solid #CFCFC4; box-shadow: inset 0 -5px 0 #CFCFC4; }
-  .keys a:last-child { border-left: 0; }
-  .keys a:active { box-shadow: inset 0 -1px 0 #CFCFC4; transform: translateY(3px); }
+  /* פס אמינות */
+  .trust { margin: 20px 16px 0; display: grid; gap: 8px; font-size: 14px; color: var(--muted); }
+  .trust div { display: flex; gap: 8px; align-items: center; }
+  .trust svg { width: 18px; height: 18px; color: var(--ok); flex: none; }
 
-  /* מדף של גבי קלטות */
-  .shelf { margin: 30px 16px 0; }
-  .shelf h2 { color: var(--gold); font-size: 22px; margin-bottom: 10px; }
-  .spine { display: flex; align-items: center; width: 100%; height: 46px; border: 0; margin-bottom: 4px; padding: 0 14px; cursor: pointer; font: 21px var(--display); text-align: right; }
-  .spine small { margin-right: auto; font: 12px var(--text); }
-  .spine:nth-child(2) { background: var(--wine); color: var(--gold); transform: translateX(4px); }
-  .spine:nth-child(3) { background: var(--paper); color: var(--green); border-right: 14px solid var(--gold); transform: translateX(-3px); }
-  .spine:nth-child(4) { background: var(--gold); color: var(--green); transform: translateX(2px); }
-  .spine:nth-child(5) { background: var(--paper); color: var(--wine); border-right: 14px solid var(--wine); transform: translateX(-5px); }
-  .spine:nth-child(6) { background: #145040; color: var(--paper); border-right: 14px solid var(--paper); transform: translateX(1px); }
+  /* שדה השאלה */
+  .ask { position: fixed; bottom: 0; left: 0; right: 0; max-width: 430px; margin: 0 auto; padding: 12px 16px 14px; background: #fff; border-top: 1px solid var(--line); }
+  .ask label { display: flex; gap: 8px; }
+  .ask input { flex: 1; border: 1px solid var(--line); border-radius: 8px; padding: 11px 12px; font: 16px var(--font); background: var(--bg); }
+  .ask button { border: 0; border-radius: 8px; padding: 0 16px; background: var(--blue); color: #fff; font: 700 15px var(--font); opacity: .6; }
+  .ask small { display: block; margin-top: 6px; font-size: 12px; color: var(--muted); text-align: center; }
 
-  /* שדה השאלה: כפתור ההקלטה של הטייפ */
-  .ask { position: fixed; bottom: 0; left: 0; right: 0; max-width: 430px; margin: 0 auto; padding: 12px 16px 14px; background: var(--green); border-top: 2px solid var(--gold); }
-  .ask label { display: flex; align-items: center; gap: 10px; }
-  .ask input { flex: 1; border: 0; background: var(--paper); padding: 12px; font: 16px var(--text); color: var(--green); }
-  .rec { width: 44px; height: 44px; border-radius: 50%; background: var(--wine); border: 3px solid var(--paper); flex: none; }
-  .ask small { display: block; margin-top: 6px; font-size: 12px; color: var(--gold); text-align: center; }
-
-  /* מסך קטגוריה: עטיפה פתוחה */
-  .cover { height: 38vh; min-height: 240px; margin: 16px; padding: 18px; position: relative; display: flex; align-items: flex-end; outline: 2px solid var(--gold); outline-offset: -8px; background-size: cover; }
-  .cover h1 { font-size: 46px; line-height: 1; color: var(--gold); position: relative; }
-  .back { position: absolute; top: 14px; right: 16px; background: none; border: 0; color: inherit; font: 700 15px var(--text); cursor: pointer; z-index: 1; }
-  .tracks { margin: 0 16px; background: var(--paper); color: var(--green); padding: 14px 16px 6px; }
-  .tracks h2 { font-size: 16px; color: var(--wine); }
-  .tracks ol { padding: 0; }
-  .tracks li { display: flex; gap: 8px; padding: 10px 0; border-bottom: 1px dotted var(--green); list-style: none; }
-  .tracks li:last-child { border: 0; }
-  .tracks li i { font-style: normal; color: var(--wine); width: 1.2em; }
-  .tracks li span { margin-right: auto; font-size: 14px; }
-  .v-shabbat .cover { background: var(--wine); }
-  .v-chag .cover { background-image: linear-gradient(to top, rgba(14,59,46,.85), rgba(14,59,46,0) 55%), url(../public/backgrounds/chag-table.webp); background-position: center 78%; }
-  .v-chag .back { background: var(--green); color: var(--gold); padding: 2px 10px; }
-  .v-rc .cover { background: #145040; }
-  .v-dawn .cover { background: var(--paper); } .v-dawn .cover h1 { color: var(--wine); } .v-dawn .back { color: var(--green); }
-  .v-chuppah .cover { background: var(--gold); } .v-chuppah .cover h1 { color: var(--green); } .v-chuppah .back { color: var(--green); }
-  .calm { margin: 22px 16px; font: 24px var(--display); color: var(--gold); text-align: center; }
-
-  @media (prefers-reduced-motion: reduce) { .reel { animation: none; } }
+  /* מסך קטגוריה */
+  .head { background: var(--navy); color: #fff; padding: 14px 16px 22px; }
+  .back { background: none; border: 0; color: #C9D6E8; font: 600 15px var(--font); cursor: pointer; padding: 0; }
+  .head h1 { font-size: 30px; font-weight: 800; margin-top: 18px; }
+  .head p { opacity: .8; font-size: 14px; }
+  .photo { height: 150px; margin: 16px 16px 0; border-radius: 12px; background: url(../public/backgrounds/chag-table.webp) center 70% / cover; }
+  .list { padding: 0; }
+  .row { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+  .row:last-child { border: 0; }
+  .row b { color: var(--navy); }
+  .row span { font-size: 14px; color: var(--muted); }
+  .calm { margin: 16px; padding: 20px; border-radius: 12px; background: var(--blue-soft); color: var(--navy); text-align: center; font-weight: 600; }
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute"><symbol id="check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" d="M20 6 9 17l-5-5"/></symbol></svg>
 <div class="app">
 
   <section class="view on" id="home">
-    <div class="week" id="week"></div>
-    <p class="lead" id="lead"></p>
-    <div class="cassette">
-      <div class="label"><div><small class="side">צד א׳</small></div><b>שם השיר</b><span>שם האמן</span></div>
-      <div class="window"><div class="reel"></div><div class="reel"></div></div>
-      <div class="head"></div>
+    <header class="top">
+      <div class="brand">[שם האפליקציה]<small>ליוצרי תוכן</small></div>
+      <div class="week" id="week"></div>
+      <p class="lead" id="lead"></p>
+    </header>
+
+    <article class="card">
+      <h2>השיר של היום</h2>
+      <div class="song-title">שם השיר</div>
+      <div class="artist">שם האמן</div>
+      <span class="badge"><svg><use href="#check"/></svg>מהרשימה המאושרת</span>
+      <p class="why">כאן יופיע הסבר קצר: למה השיר מתאים לתוכן של השבוע.</p>
+      <div class="links"><a class="btn primary" href="#">Spotify</a><a class="btn" href="#">YouTube</a><a class="btn" href="#">Apple Music</a></div>
+    </article>
+
+    <h2 class="section-title">שירים לפי אירוע</h2>
+    <div class="cats">
+      <button class="cat" data-go="shabbat">שבת<small>זמירות ושירים לשולחן השבת</small></button>
+      <button class="cat" data-go="chag">חג<small>לפי החג הקרוב</small></button>
+      <button class="cat" data-go="rc">ראש חודש<small>שירי הלל ושמחה</small></button>
+      <button class="cat" data-go="dawn">התחזקות<small>שירי חיזוק</small></button>
+      <button class="cat" data-go="chuppah">חתונה<small>לחופה ולריקודים</small></button>
     </div>
-    <p class="why">כאן יופיע הסבר קצר: למה השיר מתאים לתוכן של השבוע. השיר ייבחר רק מתוך הרשימה המאושרת.</p>
-    <div class="keys"><a href="#">Spotify</a><a href="#">YouTube</a><a href="#">Apple Music</a></div>
-    <div class="shelf">
-      <h2>הקלטות לפי אירוע</h2>
-      <button class="spine" data-go="shabbat">שבת<small>זמירות</small></button>
-      <button class="spine" data-go="chag">חג<small>לשולחן החג</small></button>
-      <button class="spine" data-go="rc">ראש חודש</button>
-      <button class="spine" data-go="dawn">התחזקות</button>
-      <button class="spine" data-go="chuppah">חתונה</button>
+
+    <div class="trust">
+      <div><svg><use href="#check"/></svg>כל השירים נבחרים מרשימה שאושרה ידנית</div>
+      <div><svg><use href="#check"/></svg>הקישורים נבדקים באופן קבוע, וקישור שבור מוסתר</div>
+      <div><svg><use href="#check"/></svg>ההאזנה בפלטפורמות הרשמיות בלבד</div>
     </div>
   </section>
 
-  <section class="view v-shabbat" id="shabbat">
-    <div class="cover"><button class="back">חזרה</button><h1>שירי שבת</h1></div>
-    <div class="tracks"><h2>צד א׳</h2><ol><li><i>1</i><b>שם השיר</b><span>שם האמן</span></li><li><i>2</i><b>שם השיר</b><span>שם האמן</span></li></ol></div>
+  <section class="view" id="shabbat">
+    <header class="head"><button class="back">חזרה</button><h1>שירי שבת</h1><p>זמירות ושירים לשולחן השבת</p></header>
+    <div class="card list"><div class="row"><b>שם השיר</b><span>שם האמן</span></div><div class="row"><b>שם השיר</b><span>שם האמן</span></div></div>
     <p class="calm">שבת שלום. החיפוש יחזור במוצאי שבת.</p>
   </section>
 
-  <section class="view v-chag" id="chag">
-    <div class="cover"><button class="back">חזרה</button><h1>שירי חג</h1></div>
-    <div class="tracks"><h2>צד א׳</h2><ol><li><i>1</i><b>שם השיר</b><span>שם האמן</span></li><li><i>2</i><b>שם השיר</b><span>שם האמן</span></li></ol></div>
+  <section class="view" id="chag">
+    <header class="head"><button class="back">חזרה</button><h1>שירי חג</h1><p>לפי החג הקרוב</p></header>
+    <div class="photo" role="img" aria-label="שולחן חג ערוך"></div>
+    <div class="card list"><div class="row"><b>שם השיר</b><span>שם האמן</span></div><div class="row"><b>שם השיר</b><span>שם האמן</span></div></div>
   </section>
 
-  <section class="view v-rc" id="rc">
-    <div class="cover"><button class="back">חזרה</button><h1>ראש חודש</h1></div>
-    <div class="tracks"><h2>צד א׳</h2><ol><li><i>1</i><b>שם השיר</b><span>שם האמן</span></li></ol></div>
+  <section class="view" id="rc">
+    <header class="head"><button class="back">חזרה</button><h1>ראש חודש</h1><p>שירי הלל ושמחה</p></header>
+    <div class="card list"><div class="row"><b>שם השיר</b><span>שם האמן</span></div></div>
   </section>
 
-  <section class="view v-dawn" id="dawn">
-    <div class="cover"><button class="back">חזרה</button><h1>התחזקות</h1></div>
-    <div class="tracks"><h2>צד א׳</h2><ol><li><i>1</i><b>שם השיר</b><span>שם האמן</span></li></ol></div>
+  <section class="view" id="dawn">
+    <header class="head"><button class="back">חזרה</button><h1>התחזקות</h1><p>שירי חיזוק</p></header>
+    <div class="card list"><div class="row"><b>שם השיר</b><span>שם האמן</span></div></div>
   </section>
 
-  <section class="view v-chuppah" id="chuppah">
-    <div class="cover"><button class="back">חזרה</button><h1>חתונה</h1></div>
-    <div class="tracks"><h2>צד א׳</h2><ol><li><i>1</i><b>שם השיר</b><span>שם האמן</span></li></ol></div>
+  <section class="view" id="chuppah">
+    <header class="head"><button class="back">חזרה</button><h1>חתונה</h1><p>לחופה ולריקודים</p></header>
+    <div class="card list"><div class="row"><b>שם השיר</b><span>שם האמן</span></div></div>
   </section>
 
   <div class="ask" id="ask">
-    <label><input placeholder="על מה הסרטון שלך?" disabled><span class="rec" role="img" aria-label="הקלטה קולית"></span></label>
+    <label><input placeholder="על מה הסרטון שלך?" disabled><button disabled>שאל</button></label>
     <small>העוזר יתחבר בשלב הבא. סינון אוטומטי בסיסי, לא תחליף לייעוץ רבני.</small>
   </div>
 </div>
@@ -163,7 +163,7 @@
   document.getElementById('week').innerHTML = names.map((n, i) => {
     const d = addDays(sunday, i);
     const cls = ['day', i === 6 && 'shabbat', i < today.getDay() && 'past', i === today.getDay() && 'today', isRC(d) && 'rc'].filter(Boolean).join(' ');
-    return `<div class="${cls}"><b>${i === 6 ? 'שבת' : 'אבגדהו'[i]}</b><small>${gem(hDay(d))}</small></div>`;
+    return `<div class="${cls}"><b>${i === 6 ? 'ש׳' : 'אבגדהו'[i]}</b><small>${gem(hDay(d))}</small></div>`;
   }).join('');
 
   let k = 0; while (k < 31 && !isRC(addDays(today, k))) k++;
