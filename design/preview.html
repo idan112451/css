@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>תצוגת עיצוב</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=IBM+Plex+Sans+Hebrew:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* יום חול: טלית, דיו, תכלת */
+  :root {
+    --bg: #F5F6F3; --ink: #16213A; --tchelet: #2F4E8C; --surface: #DCE3EF;
+    /* שבת: נגזר מתמונת הנרות */
+    --sh-bg: #120A04; --sh-surface: #2C170A; --sh-wax: #FBE8C7; --sh-glow: #C89765;
+    /* חג: נגזר מתמונת השולחן */
+    --ch-bg: #CCC4B4; --ch-burlap: #938974; --ch-olive: #29340F; --ch-gold: #A28552;
+    --serif: "Frank Ruhl Libre", "David", serif;
+    --sans: "IBM Plex Sans Hebrew", "Arial Hebrew", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--bg); color: var(--ink); font: 16px/1.6 var(--sans); }
+  .app { max-width: 430px; margin: 0 auto; min-height: 100vh; padding-bottom: 96px; position: relative; }
+  .view { display: none; }
+  .view.on { display: block; }
+
+  /* רצועת השבוע */
+  .week { display: grid; grid-template-columns: repeat(6, 1fr) 1.7fr; margin: 16px; border-radius: 6px; overflow: hidden; background: var(--surface); }
+  .day { padding: 10px 0 12px; text-align: center; position: relative; }
+  .day b { display: block; font: 700 18px var(--serif); }
+  .day small { font-size: 12px; opacity: .7; }
+  .day i { display: block; width: 9px; height: 9px; margin: 6px auto 0; border-radius: 50%; border: 1.5px solid var(--tchelet); }
+  .day.past i { background: var(--tchelet); }
+  .day.today { background: var(--tchelet); color: var(--bg); }
+  .day.today i { background: var(--bg); border-color: var(--bg); }
+  .day.rc small::after { content: " ◐"; }
+  .day.shabbat { background: var(--sh-bg); color: var(--sh-wax); }
+  .day.shabbat i { border: 0; background: var(--sh-glow); box-shadow: 0 0 10px 3px rgba(200,151,101,.55); }
+
+  .lead { margin: 20px 16px 0; font-size: 15px; }
+  .song { margin: 28px 16px 0; }
+  .song h1 { font: 700 36px/1.15 var(--serif); }
+  .song .artist { font: 500 20px var(--serif); opacity: .75; }
+  .song p { margin-top: 12px; max-width: 34ch; }
+  .links { display: flex; gap: 20px; margin-top: 14px; font-weight: 500; }
+  .links a { color: var(--tchelet); text-underline-offset: 4px; }
+  .placeholder { color: var(--tchelet); opacity: .55; }
+
+  .cats { margin: 36px 16px 0; display: flex; flex-wrap: wrap; gap: 8px 18px; }
+  .cats h2 { width: 100%; font: 700 20px var(--serif); margin-bottom: 4px; }
+  .cats button { font: 500 16px var(--sans); background: none; border: 0; padding: 4px 0; color: var(--ink); border-bottom: 2px solid var(--tchelet); cursor: pointer; }
+
+  .ask { position: fixed; bottom: 0; left: 0; right: 0; max-width: 430px; margin: 0 auto; padding: 12px 16px 16px; background: var(--bg); border-top: 1px solid var(--surface); }
+  .ask label { display: flex; align-items: center; gap: 10px; background: var(--surface); border-radius: 24px; padding: 12px 16px; }
+  .ask input { flex: 1; border: 0; background: none; font: 16px var(--sans); color: var(--ink); }
+  .ask small { display: block; margin-top: 6px; font-size: 12px; opacity: .6; text-align: center; }
+
+  /* מסך קטגוריה */
+  .hero { height: 40vh; min-height: 260px; position: relative; overflow: hidden; display: flex; align-items: flex-end; padding: 20px 16px; }
+  .hero h1 { position: relative; font: 700 40px/1.1 var(--serif); }
+  .hero .back { position: absolute; top: 14px; right: 16px; z-index: 2; background: none; border: 0; font: 500 15px var(--sans); color: inherit; cursor: pointer; }
+  .list { padding: 8px 16px 24px; }
+  .row { padding: 16px 0; border-bottom: 1px solid currentColor; border-color: color-mix(in srgb, currentColor 18%, transparent); }
+  .row b { font: 700 20px var(--serif); display: block; }
+  .row span { font-size: 14px; opacity: .7; }
+  .note { font-size: 13px; opacity: .65; padding: 12px 16px 0; }
+
+  /* שבת: אור נרות מצויר */
+  .v-shabbat { background: var(--sh-bg); color: var(--sh-wax); min-height: 100vh; }
+  .v-shabbat .hero { background: var(--sh-bg); }
+  .flame { position: absolute; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle, rgba(251,232,199,.9) 0 4%, rgba(200,151,101,.45) 14%, transparent 62%); animation: breathe 5s ease-in-out infinite alternate; }
+  .flame:nth-child(2) { top: 18%; left: 12%; }
+  .flame:nth-child(3) { top: 30%; left: 48%; width: 170px; height: 170px; animation-delay: -2s; }
+  .v-shabbat .row { border-color: rgba(251,232,199,.15); }
+  .v-shabbat .placeholder { color: var(--sh-wax); }
+  .calm { text-align: center; padding: 28px 16px; font: 500 22px var(--serif); color: var(--sh-glow); }
+  @keyframes breathe { from { opacity: .7; transform: scale(.96); } to { opacity: 1; transform: scale(1.04); } }
+
+  /* חג: התמונה של השולחן */
+  .v-chag { background: var(--ch-bg); color: var(--ch-olive); min-height: 100vh; }
+  .v-chag .hero { background: url(../public/backgrounds/chag-table.webp) center 78% / cover; }
+  .v-chag .hero::before { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, var(--ch-bg) 4%, rgba(204,196,180,0) 60%); }
+  .v-chag .row b { color: var(--ch-olive); }
+  .v-chag .row span { color: var(--ch-burlap); opacity: 1; }
+  .v-chag .back { background: var(--ch-bg); padding: 2px 10px; border-radius: 12px; }
+  .v-chag .hero h1 { border-bottom: 3px solid var(--ch-gold); padding-bottom: 4px; }
+
+  /* ראש חודש: סהר לפי היום בחודש */
+  .v-rc .hero { background: var(--ink); color: var(--bg); }
+  .v-rc svg { position: absolute; top: 34px; left: 32px; }
+
+  /* התחזקות: עלות השחר */
+  .v-dawn .hero { background: linear-gradient(to top, var(--surface) 0 30%, #8FA3C7 30.3%, var(--tchelet) 70%, var(--ink)); color: var(--ink); }
+  .v-dawn .hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: 30%; height: 2px; background: var(--bg); box-shadow: 0 0 24px 6px rgba(245,246,243,.8); }
+  .v-dawn .hero h1 { color: var(--ink); }
+  .v-dawn .back { color: var(--bg); }
+
+  /* חתונה: חופה */
+  .v-chuppah .hero { background: var(--surface); }
+  .v-chuppah svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+  @media (prefers-reduced-motion: reduce) { .flame { animation: none; } }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <section class="view on" id="home">
+    <div class="week" id="week"></div>
+    <p class="lead" id="lead"></p>
+    <div class="song">
+      <h1 class="placeholder">שם השיר</h1>
+      <div class="artist placeholder">שם האמן</div>
+      <p>כאן יופיע הסבר של שתי שורות: למה השיר מתאים לתוכן של השבוע. השיר ייבחר רק מתוך הרשימה המאושרת.</p>
+      <div class="links"><a href="#">Spotify</a><a href="#">YouTube</a><a href="#">Apple Music</a></div>
+    </div>
+    <div class="cats">
+      <h2>שירים לפי אירוע</h2>
+      <button data-go="shabbat">שבת</button>
+      <button data-go="chag">חג</button>
+      <button data-go="rc">ראש חודש</button>
+      <button data-go="dawn">התחזקות</button>
+      <button data-go="chuppah">חתונה</button>
+    </div>
+  </section>
+
+  <section class="view v-shabbat" id="shabbat">
+    <div class="hero"><div class="flame"></div><div class="flame"></div><button class="back">חזרה</button><h1>שירי שבת</h1></div>
+    <div class="list"><div class="row"><b class="placeholder">שם השיר</b><span>שם האמן</span></div><div class="row"><b class="placeholder">שם השיר</b><span>שם האמן</span></div></div>
+    <p class="calm">שבת שלום. החיפוש יחזור במוצאי שבת.</p>
+  </section>
+
+  <section class="view v-chag" id="chag">
+    <div class="hero"><button class="back">חזרה</button><h1>שירי חג</h1></div>
+    <div class="list"><div class="row"><b>שם השיר</b><span>שם האמן</span></div><div class="row"><b>שם השיר</b><span>שם האמן</span></div></div>
+  </section>
+
+  <section class="view v-rc" id="rc">
+    <div class="hero"><svg width="96" height="96" viewBox="0 0 96 96" id="moon"></svg><button class="back">חזרה</button><h1>ראש חודש</h1></div>
+    <div class="list"><div class="row"><b class="placeholder">שם השיר</b><span>שם האמן</span></div></div>
+  </section>
+
+  <section class="view v-dawn" id="dawn">
+    <div class="hero"><button class="back">חזרה</button><h1>התחזקות</h1></div>
+    <div class="list"><div class="row"><b class="placeholder">שם השיר</b><span>שם האמן</span></div></div>
+  </section>
+
+  <section class="view v-chuppah" id="chuppah">
+    <div class="hero">
+      <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+        <g stroke="#16213A" stroke-width="3"><line x1="70" y1="90" x2="70" y2="215"/><line x1="330" y1="90" x2="330" y2="215"/><line x1="130" y1="70" x2="130" y2="195"/><line x1="270" y1="70" x2="270" y2="195"/></g>
+        <path d="M70 90 Q200 150 330 90 L270 70 Q200 112 130 70 Z" fill="#F5F6F3" stroke="#2F4E8C" stroke-width="2"/>
+      </svg>
+      <button class="back">חזרה</button><h1 style="position:relative">חתונה</h1>
+    </div>
+    <div class="list"><div class="row"><b class="placeholder">שם השיר</b><span>שם האמן</span></div></div>
+  </section>
+
+  <div class="ask" id="ask">
+    <label><input placeholder="על מה הסרטון שלך?" disabled>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="הקלטה"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+    </label>
+    <small>העוזר יתחבר בשלב הבא. סינון אוטומטי בסיסי, לא תחליף לייעוץ רבני.</small>
+  </div>
+</div>
+
+<script>
+  const num = new Intl.DateTimeFormat('en-u-ca-hebrew', { day: 'numeric' });
+  const hDay = d => +num.format(d);
+  // יום בחודש באותיות: 16 → ט״ז
+  const gem = n => {
+    let t = n === 15 ? 'טו' : n === 16 ? 'טז' : ' יכל'[Math.floor(n / 10)].trim() + ' אבגדהוזחט'[n % 10].trim();
+    return t.length === 1 ? t + '׳' : t.slice(0, -1) + '״' + t.slice(-1);
+  };
+  const isRC = d => hDay(d) === 1 || hDay(d) === 30;
+  const addDays = (d, n) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+  const names = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'];
+
+  const today = new Date(), sunday = addDays(today, -today.getDay());
+  document.getElementById('week').innerHTML = names.map((n, i) => {
+    const d = addDays(sunday, i);
+    const cls = ['day', i === 6 && 'shabbat', i < today.getDay() && 'past', i === today.getDay() && 'today', isRC(d) && 'rc'].filter(Boolean).join(' ');
+    return `<div class="${cls}"><b>${i === 6 ? 'שבת' : 'אבגדהו'[i]}</b><small>${gem(hDay(d))}</small><i></i></div>`;
+  }).join('');
+
+  let k = 0; while (k < 31 && !isRC(addDays(today, k))) k++;
+  const when = k === 0 ? 'היום ראש חודש' : k === 1 ? 'מחר ראש חודש' : k === 2 ? 'עוד יומיים ראש חודש' : `עוד ${k} ימים ראש חודש`;
+  document.getElementById('lead').textContent = `יום ${names[today.getDay()]}. ${when}.`;
+
+  // הסהר: החלק המואר לפי היום בחודש העברי
+  const day = hDay(today), frac = (1 - Math.cos(2 * Math.PI * day / 29.53)) / 2;
+  const shift = (day < 15 ? -1 : 1) * 72 * frac;
+  document.getElementById('moon').innerHTML =
+    `<defs><mask id="m"><circle cx="48" cy="48" r="36" fill="#fff"/><circle cx="${48 + shift}" cy="48" r="36" fill="#000"/></mask></defs>
+     <circle cx="48" cy="48" r="36" fill="#2F4E8C" opacity=".35"/><circle cx="48" cy="48" r="36" fill="#F5F6F3" mask="url(#m)"/>`;
+
+  const show = id => {
+    document.querySelectorAll('.view').forEach(v => v.classList.toggle('on', v.id === id));
+    document.getElementById('ask').style.display = id === 'shabbat' ? 'none' : '';
+    scrollTo(0, 0);
+  };
+  document.querySelectorAll('[data-go]').forEach(b => b.onclick = () => show(b.dataset.go));
+  document.querySelectorAll('.back').forEach(b => b.onclick = () => show('home'));
+  if (location.hash) show(location.hash.slice(1));
+</script>
+</body>
+</html>
